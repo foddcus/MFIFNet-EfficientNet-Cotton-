@@ -1,2 +1,2 @@
 # MFIFNet-EfficientNet-Cotton-
-Data and script code will be released after the paper is accepted
+Data  will be released after the paper is accepted
