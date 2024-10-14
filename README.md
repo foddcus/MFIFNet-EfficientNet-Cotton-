@@ -20,31 +20,6 @@ MIFI-Net-EfficientNet-b0对应“Build_FNet_4_5_EfiB0.mlx”，其运用的拉�
 Running "calculate_cnn_flops.m" can calculate the FLOPs (Floating Point Operations) of a CNN. Before that, you need to load the model, and the model parameter name should be set as "net". The MIFI-Net-EfficientNet-b0 corresponds to "Build_FNet_4_5_EfiB0.mlx", and its employed Laplace-like Pyramid transformation layer corresponds to the function "ProjectectLYPgetLayer.m". When building the model, please place this function in the same directory.
 
 
-当训练模型时，matlab代码可以参考一下示例：
-When training the model, you can refer to the following MATLAB code example:
+当训练模型时，matlab代码可以参考一下示例：Train.m
+When training the model, you can refer to the following MATLAB code example:Train.m
 
-Pane="I:\DenseDataU8_shape";
-    imdsTrain = imageDatastore(Pane,"IncludeSubfolders",true,"LabelSource","foldernames");
-    [imdsT, imdsTest] = splitEachLabel(imdsTrain,0.75,'randomized');
-    [imdsTrain, imdsValidation] = splitEachLabel(imdsT,1/3,'randomized');
-    inputS=[600 400 14];
-    imageAugmenter = imageDataAugmenter(...
-        "RandRotation",[-90 90],...
-        "RandScale",[0.5 2]);
-    augimdsTrain = augmentedImageDatastore(inputS,imdsTrain,"DataAugmentation",imageAugmenter);
-    augimdsValidation = augmentedImageDatastore(inputS,imdsValidation);
-
-batchs=32;
-opts = trainingOptions("adam",...
-    "ExecutionEnvironment","gpu",...
-    "InitialLearnRate",0.01,...
-    "MiniBatchSize",batchs,...
-    "Shuffle","every-epoch",...
-    "Plots","training-progress",...
-    "ValidationData", augimdsValidation, "MaxEpochs", 400, "ValidationFrequency", floor(size(imdsTrain.Labels,1)/batchs)*25); %mini64-Validation80(5120)
-
-
-lgraph=Build_FNet_4_5_EfiB4(inputS);   
-[net, traininfo] = trainNetwork(augimdsTrain,lgraph,opts);
-Yt=imdsValidation.Labels
-Yp = classify(net,imdsTest)
