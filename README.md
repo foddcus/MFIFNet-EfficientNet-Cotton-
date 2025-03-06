@@ -23,3 +23,6 @@ Running "calculate_cnn_flops.m" can calculate the FLOPs (Floating Point Operatio
 当训练模型时，matlab代码可以参考一下示例：Train.m
 When training the model, you can refer to the following MATLAB code example:Train.m
 
+原始数据下载连接（raw data download）
+Cotton 2023-Rawdata-without calibration
+Link: https://pan.baidu.com/s/14A4bDoWhStrBR-owU3DTfg?pwd=xc8k 
